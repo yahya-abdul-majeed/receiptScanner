@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225320616492",
+    "project_id": "receiptscanner-caa9d",
+    "storage_bucket": "receiptscanner-caa9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225320616492:android:dab5cec46da1569c4f8789",
+        "android_client_info": {
+          "package_name": "com.yahya.receiptapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225320616492-s9ali0ha1fpp99udo6p5t80piggdr76t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbc4xL8CZ9E_4PvGwQ7t2alm89ansQC2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225320616492-s9ali0ha1fpp99udo6p5t80piggdr76t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
