@@ -3,6 +3,7 @@ package com.yahya.receiptapp
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +26,14 @@ import androidx.camera.video.QualitySelector
 import androidx.camera.video.Recorder
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.yahya.receiptapp.Receipts.BasicReceipt
+import com.yahya.receiptapp.Utitlity.TextRecognizer
 import com.yahya.receiptapp.databinding.ActivityMainBinding
+import com.yahya.receiptapp.interfaces.IReceipt
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -35,18 +44,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var uri:Uri
+    private lateinit var itemsPurchased: ArrayList<String>
 
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
     private val selectImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         this.uri = uri!!
-        callTextRecognizerActivity()
-    }
-
-    private fun callTextRecognizerActivity() {
-        val intent = Intent(this@MainActivity,TextRecognizerActivity::class.java)
-        intent.putExtra("imageuri", this.uri.toString())
-        startActivity(intent)
+        callPurchasedItemsActivity()
     }
 
 
@@ -68,6 +72,40 @@ class MainActivity : AppCompatActivity() {
         viewBinding.galleryButton.setOnClickListener {  selectImageFromGallery.launch("image/*")}
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+    }
+
+    private fun callTextRecognizerActivity() {
+        val intent = Intent(this@MainActivity,TextRecognizerActivity::class.java)
+        intent.putExtra("imageuri", this.uri.toString())
+        startActivity(intent)
+    }
+
+    private fun recognizeText(){
+        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+
+        val image = InputImage.fromFilePath(this,uri);
+        val result = recognizer.process(image)
+            .addOnSuccessListener { visionText ->
+                var textview = findViewById<TextView>(R.id.textView)
+                textview.text = visionText.text
+            }
+            .addOnFailureListener { e ->
+
+            }
+
+
+    }
+
+
+    private fun callPurchasedItemsActivity(){
+        val textRecognizer = TextRecognizer()
+        textRecognizer.recognizeText(uri, this@MainActivity){
+            itemsPurchased = it
+            val intent = Intent(this,PurchasedItemsActivity::class.java)
+            intent.putExtra("itemsPurchased", itemsPurchased)
+            startActivity(intent)
+        }
 
     }
 
@@ -108,7 +146,9 @@ class MainActivity : AppCompatActivity() {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     uri = output.savedUri!!
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    //After we get the image
                     callTextRecognizerActivity()
+
                     Log.d(TAG, msg)
                 }
             }
@@ -189,21 +229,12 @@ class MainActivity : AppCompatActivity() {
             }.toTypedArray()
     }
 
-//    private fun onDeviceTextRecognizer(){
-//        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-//
-//        val image = InputImage.fromFilePath(this,uri);
-//        val result = recognizer.process(image)
-//            .addOnSuccessListener { visionText ->
-//
-//            }
-//            .addOnFailureListener { e ->
-//
-//            }
-//
-//
-//    }
 
+//    private fun callTextRecognizerActivity() {
+//        val intent = Intent(this@MainActivity,TextRecognizerActivity::class.java)
+//        intent.putExtra("imageuri", this.uri.toString())
+//        startActivity(intent)
+//    }
 
 
 
