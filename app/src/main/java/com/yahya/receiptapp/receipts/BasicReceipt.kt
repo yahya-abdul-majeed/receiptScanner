@@ -1,4 +1,4 @@
-package com.yahya.receiptapp.Receipts
+package com.yahya.receiptapp.receipts
 
 import com.google.mlkit.vision.text.Text
 import com.yahya.receiptapp.interfaces.IReceipt

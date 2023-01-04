@@ -1,4 +1,4 @@
-package com.yahya.receiptapp.Utitlity
+package com.yahya.receiptapp.utility
 
 import android.content.Context
 import android.net.Uri
@@ -6,7 +6,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.yahya.receiptapp.Receipts.BasicReceipt
+import com.yahya.receiptapp.receipts.BasicReceipt
 import com.yahya.receiptapp.interfaces.IReceipt
 
 class TextRecognizer {

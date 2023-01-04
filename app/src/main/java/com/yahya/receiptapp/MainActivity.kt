@@ -3,7 +3,6 @@ package com.yahya.receiptapp
 
 import android.Manifest
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -11,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -26,14 +24,8 @@ import androidx.camera.video.QualitySelector
 import androidx.camera.video.Recorder
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.Text
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.yahya.receiptapp.Receipts.BasicReceipt
-import com.yahya.receiptapp.Utitlity.TextRecognizer
+import com.yahya.receiptapp.utility.TextRecognizer
 import com.yahya.receiptapp.databinding.ActivityMainBinding
-import com.yahya.receiptapp.interfaces.IReceipt
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
