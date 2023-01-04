@@ -1,5 +1,6 @@
  package com.yahya.receiptapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -30,6 +31,11 @@ import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
 
         viewBinding.btnAdditem.setOnClickListener {
             AddItemDialogFragment().show(supportFragmentManager,"additem")
+        }
+        viewBinding.btnAddtostore.setOnClickListener {
+            val intent = Intent(this,ItemStoreActivity::class.java)
+            intent.putExtra("listofproducts", listOfProducts)
+            startActivity(intent)
         }
     }
 
