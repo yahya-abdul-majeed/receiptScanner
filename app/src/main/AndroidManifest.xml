@@ -19,13 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Receipt"
         tools:targetApi="31">
-        <activity
-            android:name=".TextRecognizerActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".PurchasedItemsActivity"
             android:exported="false">

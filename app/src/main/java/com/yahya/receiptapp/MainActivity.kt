@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
+
     private val selectImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         this.uri = uri!!
         callPurchasedItemsActivity()
@@ -74,29 +75,6 @@ class MainActivity : AppCompatActivity() {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
     }
-
-    private fun callTextRecognizerActivity() {
-        val intent = Intent(this@MainActivity,TextRecognizerActivity::class.java)
-        intent.putExtra("imageuri", this.uri.toString())
-        startActivity(intent)
-    }
-
-    private fun recognizeText(){
-        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-
-        val image = InputImage.fromFilePath(this,uri);
-        val result = recognizer.process(image)
-            .addOnSuccessListener { visionText ->
-                var textview = findViewById<TextView>(R.id.textView)
-                textview.text = visionText.text
-            }
-            .addOnFailureListener { e ->
-
-            }
-
-
-    }
-
 
     private fun callPurchasedItemsActivity(){
         val textRecognizer = TextRecognizer()
@@ -147,8 +125,7 @@ class MainActivity : AppCompatActivity() {
                     uri = output.savedUri!!
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     //After we get the image
-                    callTextRecognizerActivity()
-
+                    callPurchasedItemsActivity()
                     Log.d(TAG, msg)
                 }
             }
@@ -228,14 +205,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }.toTypedArray()
     }
-
-
-//    private fun callTextRecognizerActivity() {
-//        val intent = Intent(this@MainActivity,TextRecognizerActivity::class.java)
-//        intent.putExtra("imageuri", this.uri.toString())
-//        startActivity(intent)
-//    }
-
 
 
 }
