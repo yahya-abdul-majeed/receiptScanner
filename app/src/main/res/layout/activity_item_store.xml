@@ -22,8 +22,25 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
         android:text="Items in Store"
-        android:textSize="34sp"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/storeRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/btn_clearStore"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.662" />
+
+    <Button
+        android:id="@+id/btn_clearStore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clear store"
+        app:layout_constraintBottom_toTopOf="@+id/storeRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.708" />
 </androidx.constraintlayout.widget.ConstraintLayout>

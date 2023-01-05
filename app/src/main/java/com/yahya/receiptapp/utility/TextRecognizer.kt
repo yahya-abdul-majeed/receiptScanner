@@ -8,6 +8,7 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.yahya.receiptapp.receipts.BasicReceipt
 import com.yahya.receiptapp.interfaces.IReceipt
+import com.yahya.receiptapp.models.Product
 
 class TextRecognizer {
     public var dictionary = mapOf( //immutable
@@ -26,8 +27,8 @@ class TextRecognizer {
         "Tomato" to 8
     )
 
-    public fun recognizeText(uri:Uri, context: Context, callback:(ArrayList<String>)->Unit){
-        var itemsPurchased = ArrayList<String>()
+    public fun recognizeText(uri:Uri, context: Context, callback:(ArrayList<Product>)->Unit){
+        var itemsPurchased: ArrayList<Product>
 
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         val image = InputImage.fromFilePath(context,uri);
@@ -42,7 +43,7 @@ class TextRecognizer {
 
     }
 
-    private fun receiptProcessor(receipt: IReceipt, visionText: Text): ArrayList<String>{
+    private fun receiptProcessor(receipt: IReceipt, visionText: Text): ArrayList<Product>{
         return receipt.execute(visionText);
     }
 }

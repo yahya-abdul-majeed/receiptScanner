@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yahya.receiptapp.utility.TextRecognizer
 import com.yahya.receiptapp.databinding.ActivityMainBinding
+import com.yahya.receiptapp.models.Product
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var uri:Uri
-    private lateinit var itemsPurchased: ArrayList<String>
+    private lateinit var itemsPurchased: ArrayList<Product>
 
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService

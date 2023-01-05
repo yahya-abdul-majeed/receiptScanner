@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yahya.receiptapp.utility.ItemListAdapter
 import com.yahya.receiptapp.databinding.ActivityPurchasedItemsBinding
 import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
+import com.yahya.receiptapp.models.Product
 
 
  class PurchasedItemsActivity : AppCompatActivity(),IRecyclerViewInterface, AddItemDialogFragment.AddItemDialogListener {
     private lateinit var viewBinding: ActivityPurchasedItemsBinding
-    private lateinit var listOfProducts: ArrayList<String>
+    private lateinit var listOfProducts: ArrayList<Product>
     private lateinit var itemListAdapter: ItemListAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -23,7 +24,7 @@ import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
         viewBinding = ActivityPurchasedItemsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        listOfProducts = intent.getStringArrayListExtra("itemsPurchased") as ArrayList<String>
+        listOfProducts = intent.getStringArrayListExtra("itemsPurchased") as ArrayList<Product>
         itemListAdapter = ItemListAdapter(listOfProducts,this)
         recyclerView = viewBinding.recyclerview
         recyclerView.adapter = itemListAdapter
@@ -44,7 +45,7 @@ import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
          itemListAdapter.notifyItemRemoved(position)
      }
 
-     override fun onDialogPositiveClick(dialog: DialogFragment, itemAdded: String) {
+     override fun onDialogPositiveClick(dialog: DialogFragment, itemAdded: Product) {
          listOfProducts.add(itemAdded)
          itemListAdapter.notifyDataSetChanged()
      }

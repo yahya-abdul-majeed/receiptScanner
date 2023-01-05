@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yahya.receiptapp.ItemStoreActivity
 import com.yahya.receiptapp.R
 import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
+import com.yahya.receiptapp.models.Product
 
-class ItemListAdapter(private val listOfProducts: MutableList<String>,
+class ItemListAdapter(private val listOfProducts: MutableList<Product>,
                       private val listener: IRecyclerViewInterface
 ): RecyclerView.Adapter<ItemListAdapter.ItemsViewHolder>()
 {
@@ -22,7 +23,7 @@ class ItemListAdapter(private val listOfProducts: MutableList<String>,
     }
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
-        holder.textView.text = listOfProducts[position]
+        holder.textView.text = listOfProducts[position].name
     }
 
     override fun getItemCount(): Int {

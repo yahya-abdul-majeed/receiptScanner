@@ -7,12 +7,13 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
+import com.yahya.receiptapp.models.Product
+import java.util.*
 
 class AddItemDialogFragment:DialogFragment() {
     internal lateinit var listener: AddItemDialogListener
-    var itemAdded = ""
     interface AddItemDialogListener {
-        fun onDialogPositiveClick(dialog: DialogFragment, itemAdded: String)
+        fun onDialogPositiveClick(dialog: DialogFragment, itemAdded: Product)
     }
 
 
@@ -30,7 +31,7 @@ class AddItemDialogFragment:DialogFragment() {
                 .setPositiveButton("Add item"
                 ) { dialog, id ->
                     var textInput = v.findViewById<TextInputEditText>(R.id.textInput)
-                    itemAdded = textInput.text.toString()
+                    val itemAdded = Product(textInput.text.toString(), Date(),Date())
                     listener.onDialogPositiveClick(this,itemAdded)
                 }
                 .setNegativeButton("Cancel"
