@@ -12,7 +12,7 @@ class BasicReceipt: IReceipt {
         var list = ArrayList<Product>()
         for(block in visionText.textBlocks){
             for(line in block.lines){
-                list.add(Product(line.text, Date(),Date()));
+                list.add(Product(line.text, Date(),null));
             }
         }
         return list

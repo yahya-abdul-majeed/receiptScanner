@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import com.yahya.receiptapp.utility.TextRecognizer
 import com.yahya.receiptapp.databinding.ActivityMainBinding
 import com.yahya.receiptapp.models.Product
+import com.yahya.receiptapp.utility.NotificationHelper
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
+
 
     private val selectImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         this.uri = uri!!
@@ -66,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         viewBinding.galleryButton.setOnClickListener {  selectImageFromGallery.launch("image/*")}
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+
 
     }
 

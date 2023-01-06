@@ -11,6 +11,7 @@ import com.yahya.receiptapp.utility.ItemListAdapter
 import com.yahya.receiptapp.databinding.ActivityPurchasedItemsBinding
 import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
 import com.yahya.receiptapp.models.Product
+import com.yahya.receiptapp.utility.NotificationHelper
 
 
  class PurchasedItemsActivity : AppCompatActivity(),IRecyclerViewInterface, AddItemDialogFragment.AddItemDialogListener {
@@ -18,6 +19,7 @@ import com.yahya.receiptapp.models.Product
     private lateinit var listOfProducts: ArrayList<Product>
     private lateinit var itemListAdapter: ItemListAdapter
     private lateinit var recyclerView: RecyclerView
+    private var _nh = NotificationHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,7 @@ import com.yahya.receiptapp.models.Product
         recyclerView = viewBinding.recyclerview
         recyclerView.adapter = itemListAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+        _nh.createNotificationChannel()
 
         viewBinding.btnAdditem.setOnClickListener {
             AddItemDialogFragment().show(supportFragmentManager,"additem")
@@ -43,6 +46,7 @@ import com.yahya.receiptapp.models.Product
      override fun onItemLongClick(position: Int) {
          listOfProducts.removeAt(position)
          itemListAdapter.notifyItemRemoved(position)
+         _nh.sendNotification()
      }
 
      override fun onDialogPositiveClick(dialog: DialogFragment, itemAdded: Product) {

@@ -10,6 +10,7 @@ import com.yahya.receiptapp.ItemStoreActivity
 import com.yahya.receiptapp.R
 import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
 import com.yahya.receiptapp.models.Product
+import org.w3c.dom.Text
 
 class ItemListAdapter(private val listOfProducts: MutableList<Product>,
                       private val listener: IRecyclerViewInterface
@@ -24,6 +25,7 @@ class ItemListAdapter(private val listOfProducts: MutableList<Product>,
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
         holder.textView.text = listOfProducts[position].name
+        holder.textViewExpiry.text = listOfProducts[position].expiryDate?.toString()
     }
 
     override fun getItemCount(): Int {
@@ -32,9 +34,11 @@ class ItemListAdapter(private val listOfProducts: MutableList<Product>,
 
     class ItemsViewHolder(view:View, listener: IRecyclerViewInterface):RecyclerView.ViewHolder(view){
         val textView : TextView
+        val textViewExpiry: TextView
         val card: CardView
         init{
             textView = view.findViewById(R.id.textViewHolder)
+            textViewExpiry = view.findViewById(R.id.textViewExpiry)
             card = view.findViewById(R.id.mCardView)
             card.setOnLongClickListener(View.OnLongClickListener {
                 listener.onItemLongClick(adapterPosition)

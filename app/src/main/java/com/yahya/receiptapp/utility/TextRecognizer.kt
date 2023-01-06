@@ -11,22 +11,8 @@ import com.yahya.receiptapp.interfaces.IReceipt
 import com.yahya.receiptapp.models.Product
 
 class TextRecognizer {
-    public var dictionary = mapOf( //immutable
-        "milk" to 5,
-        "banana" to 7,
-        "apple" to 4,
-        "chicken" to 10,
-        "cheese" to 3,
-        "egg" to 12,
-        "bread" to 2,
-        "pepsi" to 5,
-        "juice" to 6,
-        "mushroom" to 7,
-        "flour" to 25,
-        "onion" to 7,
-        "Tomato" to 8
-    )
 
+    val foodAPI = FoodAPI()
     public fun recognizeText(uri:Uri, context: Context, callback:(ArrayList<Product>)->Unit){
         var itemsPurchased: ArrayList<Product>
 
@@ -35,6 +21,7 @@ class TextRecognizer {
         val result = recognizer.process(image)
             .addOnSuccessListener { visionText ->
                 itemsPurchased = receiptProcessor(BasicReceipt(),visionText)
+                itemsPurchased = foodAPI.findExpiryDate(itemsPurchased)
                 callback(itemsPurchased)
             }
             .addOnFailureListener { e ->

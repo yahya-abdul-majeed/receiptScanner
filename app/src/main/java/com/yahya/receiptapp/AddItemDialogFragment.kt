@@ -31,7 +31,7 @@ class AddItemDialogFragment:DialogFragment() {
                 .setPositiveButton("Add item"
                 ) { dialog, id ->
                     var textInput = v.findViewById<TextInputEditText>(R.id.textInput)
-                    val itemAdded = Product(textInput.text.toString(), Date(),Date())
+                    val itemAdded = Product(textInput.text.toString(), Date(),null)
                     listener.onDialogPositiveClick(this,itemAdded)
                 }
                 .setNegativeButton("Cancel"
