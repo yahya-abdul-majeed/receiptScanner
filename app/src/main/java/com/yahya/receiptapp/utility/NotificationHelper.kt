@@ -2,25 +2,28 @@ package com.yahya.receiptapp.utility
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.yahya.receiptapp.R
 
-class NotificationHelper (context:Context){
-    private var _context = context
+var notificationID = 1;
+const val channelId = "1";
 
-    var builder = NotificationCompat.Builder(_context,"channel_id")
-        .setSmallIcon(R.drawable.ic_launcher_foreground)
-        .setContentTitle("notification_title")
-        .setContentText("notification_text")
-        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+class NotificationHelper : BroadcastReceiver(){
 
-    fun sendNotification(){
-        with(NotificationManagerCompat.from(_context)){
-            notify(76,builder.build())
-        }
+    override fun onReceive(context: Context?, p1: Intent?) {
+        val notification = NotificationCompat.Builder(context!!, channelId)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("notification_title")
+            .setContentText("notification_text")
+            .build()
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.notify(notificationID, notification)
     }
 
 
@@ -32,9 +35,11 @@ class NotificationHelper (context:Context){
             val channel = NotificationChannel("channel_id",name,importance).apply {
                 description = descriptionText
             }
-            val notificationManager = _context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+            //val notificationManager = _context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            //notificationManager.createNotificationChannel(channel)
 
         }
     }
+
+
 }

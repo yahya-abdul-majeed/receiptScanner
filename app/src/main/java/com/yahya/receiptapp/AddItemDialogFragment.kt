@@ -4,7 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
+import android.widget.DatePicker
+import android.widget.TimePicker
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.yahya.receiptapp.models.Product
@@ -17,6 +21,7 @@ class AddItemDialogFragment:DialogFragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog{
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -31,7 +36,18 @@ class AddItemDialogFragment:DialogFragment() {
                 .setPositiveButton("Add item"
                 ) { dialog, id ->
                     var textInput = v.findViewById<TextInputEditText>(R.id.textInput)
-                    val itemAdded = Product(textInput.text.toString(), Date(),null)
+                    val datePicker = v.findViewById<DatePicker>(R.id.datePicker)
+                    val timePicker = v.findViewById<TimePicker>(R.id.timePicker)
+
+                    val minute = timePicker.minute
+                    val hour = timePicker.hour
+                    val day = datePicker.dayOfMonth
+                    val month = datePicker.month
+                    val year = datePicker.year
+                    val c = Calendar.getInstance()
+                    c.set(year,month,day,hour,minute)
+
+                    val itemAdded = Product(textInput.text.toString(), Date(),c.time)
                     listener.onDialogPositiveClick(this,itemAdded)
                 }
                 .setNegativeButton("Cancel"

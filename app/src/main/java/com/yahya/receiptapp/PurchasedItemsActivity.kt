@@ -1,6 +1,11 @@
  package com.yahya.receiptapp
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -12,6 +17,7 @@ import com.yahya.receiptapp.databinding.ActivityPurchasedItemsBinding
 import com.yahya.receiptapp.interfaces.IRecyclerViewInterface
 import com.yahya.receiptapp.models.Product
 import com.yahya.receiptapp.utility.NotificationHelper
+import com.yahya.receiptapp.utility.channelId
 
 
  class PurchasedItemsActivity : AppCompatActivity(),IRecyclerViewInterface, AddItemDialogFragment.AddItemDialogListener {
@@ -19,19 +25,20 @@ import com.yahya.receiptapp.utility.NotificationHelper
     private lateinit var listOfProducts: ArrayList<Product>
     private lateinit var itemListAdapter: ItemListAdapter
     private lateinit var recyclerView: RecyclerView
-    private var _nh = NotificationHelper(this)
+
+    init{
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityPurchasedItemsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
         listOfProducts = intent.getStringArrayListExtra("itemsPurchased") as ArrayList<Product>
         itemListAdapter = ItemListAdapter(listOfProducts,this)
         recyclerView = viewBinding.recyclerview
         recyclerView.adapter = itemListAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        _nh.createNotificationChannel()
 
         viewBinding.btnAdditem.setOnClickListener {
             AddItemDialogFragment().show(supportFragmentManager,"additem")
@@ -43,12 +50,13 @@ import com.yahya.receiptapp.utility.NotificationHelper
         }
     }
 
+
      override fun onItemLongClick(position: Int) {
          listOfProducts.removeAt(position)
          itemListAdapter.notifyItemRemoved(position)
-         _nh.sendNotification()
      }
 
+     @SuppressLint("NotifyDataSetChanged")
      override fun onDialogPositiveClick(dialog: DialogFragment, itemAdded: Product) {
          listOfProducts.add(itemAdded)
          itemListAdapter.notifyDataSetChanged()
