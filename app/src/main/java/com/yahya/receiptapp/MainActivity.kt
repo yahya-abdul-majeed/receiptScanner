@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -54,6 +55,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        val prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        var firstStart = prefs.getBoolean("firstStart",true);
+        if(firstStart){
+            prefs.edit().putBoolean("firstStart",false).apply()
+            startActivity(Intent(this,Slider::class.java))
+        }
 
         // Request camera permissions
         if (allPermissionsGranted()) {
