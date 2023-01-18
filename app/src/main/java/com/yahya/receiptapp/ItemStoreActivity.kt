@@ -56,6 +56,11 @@ class ItemStoreActivity : AppCompatActivity(),IRecyclerViewInterface {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        PersistenceService.saveItemStoreToInternalStorage(this,itemStore,filename)
+    }
+
     private fun scheduleNotification(time:Long){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val intent = Intent(applicationContext, NotificationHelper::class.java)
@@ -104,5 +109,23 @@ class ItemStoreActivity : AppCompatActivity(),IRecyclerViewInterface {
         }
     }
 
-    override fun onItemLongClick(position: Int) {}
+    override fun onItemLongClick(position: Int) {
+        itemStore.removeAt(position)
+        itemListAdapter.notifyItemRemoved(position)
+//        if(position == itemStore.size -1){
+//
+//       }else{
+//           var shift: Int = 1;
+//           while(true){
+//               try{
+//                   itemStore.removeAt(position-shift)
+//                   itemListAdapter.notifyItemRemoved(position)
+//                   break;
+//               }catch (e:java.lang.IndexOutOfBoundsException){
+//                   shift++;
+//               }
+//           }
+//       }
+
+    }
 }
